@@ -1,23 +1,24 @@
-#include <stdio.h>
 #include "sort.h"
+#include <unistd.h>
+
+void print_number(int n);
+void print_char(char c);
 
 /**
  * print_list - Prints a list of integers
- *
  * @list: The list to be printed
  */
 void print_list(const listint_t *list)
 {
-int i;
+int i = 0;
 
-i = 0;
 while (list)
 {
 if (i > 0)
-printf(", ");
-printf("%d", list->n);
-++i;
+print_char(','), print_char(' ');
+print_number(list->n);
+i++;
 list = list->next;
 }
-printf("\n");
+print_char('\n');
 }
