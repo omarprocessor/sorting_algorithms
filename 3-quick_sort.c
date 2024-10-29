@@ -1,70 +1,76 @@
 #include "sort.h"
 
 /**
- * swap - swaps two elements in an array
- * @array: the array of integers
- * @a: the index of the first element
- * @b: the index of the second element
- * @size: the size of the array
- */
-void swap(int *array, size_t a, size_t b, size_t size)
-{
-int temp = array[a];
-array[a] = array[b];
-array[b] = temp;
-print_array(array, size);
-}
-
-/**
- * partition - partitions the array using Lomuto's scheme
- * @array: the array of integers
- * @low: the starting index
- * @high: the ending index
- * @size: the size of the array
+ * badilisha - inabadilisha thamani za int 2
+ * @array: array ya int inayopangwa
+ * @size: ukubwa wa array
+ * @a: anwani ya thamani ya kwanza
+ * @b: anwani ya thamani ya pili
  *
- * Return: the index of the pivot
+ * Return: void
  */
-int partition(int *array, int low, int high, size_t size)
+void badilisha(int *array, size_t size, int *a, int *b)
 {
-int pivot = array[high];
-int i = low - 1;
-int j;
+if (*a != *b)
+{
+*a = *a + *b;
+*b = *a - *b;
+*a = *a - *b;
+print_array((const int *)array, size);
+}
+}
 
-for (j = low; j < high; j++)
+/**
+ * sehemu_lomuto - inagawanya array
+ * @array: array ya int inayopangwa
+ * @size: ukubwa wa array
+ * @lo: index ya chini ya eneo la kupangwa
+ * @hi: index ya juu ya eneo la kupangwa
+ *
+ * Return: void
+ */
+size_t sehemu_lomuto(int *array, size_t size, ssize_t lo, ssize_t hi)
 {
+int i, j, pivot = array[hi];
+
+for (i = j = lo; j < hi; j++)
 if (array[j] < pivot)
-{
-i++;
-swap(array, i, j, size);
-}
-}
-swap(array, i + 1, high, size);
-return (i + 1);
+badilisha(array, size, &array[j], &array[i++]);
+badilisha(array, size, &array[i], &array[hi]);
+
+return (i);
 }
 
 /**
- * quick_sort_recursive - recursively sorts the array
- * @array: the array of integers
- * @low: the starting index
- * @high: the ending index
- * @size: the size of the array
+ * kupangwa_haraka - inapanga kwa kutumia mpango wa kugawanya wa Lomuto
+ * @array: array ya int inayopangwa
+ * @size: ukubwa wa array
+ * @lo: index ya chini ya eneo la kupangwa
+ * @hi: index ya juu ya eneo la kupangwa
+ *
+ * Return: void
  */
-void quick_sort_recursive(int *array, int low, int high, size_t size)
+void kupangwa_haraka(int *array, size_t size, ssize_t lo, ssize_t hi)
 {
-if (low < high)
+if (lo < hi)
 {
-int pi = partition(array, low, high, size);
-quick_sort_recursive(array, low, pi - 1, size);
-quick_sort_recursive(array, pi + 1, high, size);
+size_t p = sehemu_lomuto(array, size, lo, hi);
+
+kupangwa_haraka(array, size, lo, p - 1);
+kupangwa_haraka(array, size, p + 1, hi);
 }
 }
 
 /**
- * quick_sort - sorts an array of integers in ascending order
- * @array: the array of integers
- * @size: the size of the array
+ * quick_sort - inaita kupangwa_haraka
+ * @array: array ya int inayopangwa
+ * @size: ukubwa wa array
+ *
+ * Return: void
  */
 void quick_sort(int *array, size_t size)
 {
-quick_sort_recursive(array, 0, size - 1, size);
+if (!array || !size)
+return;
+kupangwa_haraka(array, size, 0, size - 1);
 }

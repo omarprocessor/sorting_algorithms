@@ -2,7 +2,7 @@
 #define SORT_H
 
 #include <stddef.h>
-
+#include <sys/types.h>
 /**
  * struct listint_s - Doubly linked list node
  *
@@ -24,8 +24,9 @@ void print_number(int n);
 void print_char(char c);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
-void swap(int *array, size_t a, size_t b, size_t size);
-int partition(int *array, int low, int high, size_t size);
-void quick_sort_recursive(int *array, int low, int high, size_t size);
+void badilisha(int *array, size_t size, int *a, int *b);
+size_t sehemu_lomuto(int *array, size_t size, ssize_t lo, ssize_t hi);
+void kupangwa_haraka(int *array, size_t size, ssize_t lo, ssize_t hi);
 void quick_sort(int *array, size_t size);
+
 #endif /* SORT_H */
